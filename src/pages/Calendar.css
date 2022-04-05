@@ -1,0 +1,57 @@
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
+html {
+box-sizing: border-box;
+}
+
+
+
+ .weekdays  {
+   display: inline-block;
+  width: 13.6%;
+  color: rgb(53, 49, 49);
+  text-align: center;
+}
+
+ .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 200px;
+  gap: 0px 0px;
+}
+.days .day {
+  border-width: medium;
+  border-style: solid;
+  border-color: black;
+  color: black;
+ font-size: large;
+ padding: 10px;
+background-color: white;
+}
+.days .day.weekend {
+  background-color: rgb(128, 121, 121);
+  color: blue;
+}
+.days .day.today{
+  color: white;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  display: flex;
+  background: #C7372F;
+  border: 4px;
+  flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.days .day.notCurrentMonth {
+  color: gray;
+}
+
+.days li .active {
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important
+}
