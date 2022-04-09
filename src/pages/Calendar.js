@@ -1,5 +1,5 @@
-import React, { useState }  from 'react';
-import './Calendar.css';
+import React, { useState, useRef } from "react";
+import "./Calendar.css";
 import {
   getMonth,
   startOfMonth,
@@ -10,41 +10,38 @@ import {
   format,
   isWeekend,
   isToday
-} from 'date-fns';
+} from "date-fns";
 // import Day from '../components/Day';
-import Modal from '../components/Modal';
+import Modal from "../components/Modal";
 
 function Calendar(props) {
-
-  const [dropDown, setDropDown] = useState("");
-  const showDropdown = () => {
-    document.body.addEventListener("click", closeDropdown);
-  }
-  const closeDropdown = event =>{
-  
-  setDropDown("");
-  document.body.removeEventListener("click", closeDropdown);
-}
+  const [modalOpen, setModalOpen] = useState(false);
   let currentDay = new Date();
   let currentMonth = getMonth(currentDay);
 
   let startOfWeekCurrentMonth = startOfWeek(startOfMonth(currentDay));
   let endOfWeekCurrentMonth = endOfWeek(endOfMonth(currentDay));
-  let allDaysMonth = eachDayOfInterval({ start: startOfWeekCurrentMonth, end: endOfWeekCurrentMonth });
+  let allDaysMonth = eachDayOfInterval({
+    start: startOfWeekCurrentMonth,
+    end: endOfWeekCurrentMonth
+  });
 
-
-  let allDaysFormattedRender = allDaysMonth.map((date) =>
-    <div className={`day ${isToday(date) ? "today" : ""} ${isWeekend(date) ? "weekend" : ""} ${getMonth(date) !== currentMonth ? "notCurrentMonth" : ""}`} onClick={showDropdown}>
-      <p style={{ margin: "7px" }}>
-        {format(date, 'd')}
-      </p>
-      <Modal class={dropDown}></Modal>
+  let allDaysFormattedRender = allDaysMonth.map((date) => (
+    <div
+      className={`day ${isToday(date) ? "today" : ""} ${
+        isWeekend(date) ? "weekend" : ""
+      } ${getMonth(date) !== currentMonth ? "notCurrentMonth" : ""}`}
+      onClick={() => {
+        setModalOpen(true);
+      }}
+    >
+      <p style={{ margin: "7px" }}>{format(date, "d")}</p>
     </div>
-  );
-  console.log(allDaysMonth);
+  ));
+  // console.log(allDaysMonth);
   return (
     <div class="container">
-      <div >
+      <div>
         <div class="weekdays">Sunday</div>
         <div class="weekdays">Monday</div>
         <div class="weekdays">Tuesday</div>
@@ -53,16 +50,16 @@ function Calendar(props) {
         <div class="weekdays">Friday</div>
         <div class="weekdays">Saturday</div>
       </div>
-
+      {modalOpen && <Modal setModalOpen={setModalOpen}></Modal>}
       <div class="days">{allDaysFormattedRender} </div>
     </div>
-  )
+  );
 }
 
 function dateCalculation() {
   let currentDay = new Date();
   let currentMonth = getMonth(currentDay);
-  console.log(currentMonth);
+  // console.log(currentMonth);
   return currentMonth;
 }
 
